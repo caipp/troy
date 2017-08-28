@@ -32,7 +32,7 @@ public class Swagger2 {
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
                 .description("更多Spring Boot相关文章请关注:https://caipp.github.io/")
                 .termsOfServiceUrl("https://caipp.github.io/")
-                .version("1.0")
+                .version("2.0")
                 .build();
     }
 
