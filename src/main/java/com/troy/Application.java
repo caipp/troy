@@ -7,12 +7,14 @@ import com.troy.domain.entity.User;
 import com.troy.repository.PermissionRepository;
 import com.troy.repository.RoleRepository;
 import com.troy.repository.UserRepository;
+import com.troy.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -23,6 +25,7 @@ import java.util.Set;
 
 @EnableTransactionManagement
 @SpringBootApplication
+@EnableJpaAuditing
 public class Application {
 
 	public static void main(String[] args) {
@@ -40,7 +43,7 @@ public class Application {
 			private RoleRepository roleRepository;
 
 			@Autowired
-			private UserRepository userRepository;
+			private UserService userService;
 
 			@Autowired
 			private PermissionRepository permissionRepository;
@@ -81,7 +84,7 @@ public class Application {
 					roleSet.add(role);
 				}
 				user.setRoles(roleSet);
-				return userRepository.save(user);
+				return userService.save(user,null);
 			}
 
 			private Permission addPermission(String name, String code,String address) {
@@ -97,6 +100,7 @@ public class Application {
 			}
 		};
 	}
+
 
 	@Bean
 	public Filter characterEncodingFilter() {

@@ -1,9 +1,10 @@
 package com.troy.web.rest;
 
+import com.troy.domain.dto.UserDTO;
 import com.troy.domain.entity.User;
 import com.troy.enums.ResultCode;
-import com.troy.service.base.BaseService;
 import com.troy.service.UserService;
+import com.troy.service.base.BaseService;
 import com.troy.utils.ApiResult;
 import com.troy.utils.HbUtils;
 import com.troy.web.base.BaseController;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value="/api/users")
-public class UserController extends BaseController<User> {
+public class UserController extends BaseController<User,UserDTO> {
 
     @Autowired
     private UserService userService;
@@ -29,10 +30,21 @@ public class UserController extends BaseController<User> {
         return userService;
     }
 
+    @Override
+    protected User newModel() {
+        return new User();
+    }
+
+    @Override
+    protected UserDTO newDTO() {
+        return new UserDTO();
+    }
+
     @ApiOperation(value="获取对象", notes="根据url的username来获取指定对象")
     @RequestMapping(value = "/name/{username}", method = { RequestMethod.GET })
     public ApiResult getByUsername(@PathVariable("username") String username) {
         User model = userService.loadUserByUsername(username);
         return new ApiResult(ResultCode.SUCCESS,null, HbUtils.deproxy(model));
     }
+
 }

@@ -29,9 +29,11 @@ public class Role extends BaseEntity implements GrantedAuthority {
     private Set<Permission> permissions = new HashSet<>();
 
     @JsonIgnore
-    @ManyToMany(targetEntity = User.class, mappedBy = "roles")
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "m_user_role", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> users = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(targetEntity = UserGroup.class, mappedBy = "roles")
     private Set<UserGroup> userGroups = new HashSet<>();
 

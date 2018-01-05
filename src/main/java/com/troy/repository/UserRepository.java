@@ -7,4 +7,7 @@ public interface UserRepository extends BaseRepository<User> {
 
     User findByUsername(String username);
 
+    User findByWxOpenId(String wxOpenId);
+
+    User findByLinglingId(String linglingId);
 }

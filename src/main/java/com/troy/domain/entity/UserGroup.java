@@ -21,13 +21,17 @@ public class UserGroup extends BaseEntity {
 
     private String comment;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinTable(name = "m_usergroup_user", joinColumns = {@JoinColumn(name = "usergroup_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<Role> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
     @JoinTable(name = "m_usergroup_role", joinColumns = {@JoinColumn(name = "usergroup_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(targetEntity = Device.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "m_usergroup_device", joinColumns = {@JoinColumn(name = "usergroup_id")}, inverseJoinColumns = {@JoinColumn(name = "device_id")})
+    private Set<Device> devices = new HashSet<>();
 
     public String getCode() {
         return code;
@@ -53,11 +57,11 @@ public class UserGroup extends BaseEntity {
         this.comment = comment;
     }
 
-    public Set<Role> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<Role> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -67,5 +71,13 @@ public class UserGroup extends BaseEntity {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Set<Device> devices) {
+        this.devices = devices;
     }
 }

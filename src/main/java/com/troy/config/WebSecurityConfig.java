@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //allow anonymous resource requests
                 .antMatchers("/").permitAll()
+                .antMatchers("/api/records/callback").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
@@ -83,6 +84,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**").permitAll()
                 //allow anonymous POSTs to login
                 .antMatchers(HttpMethod.POST, "/api/auth").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/auth/check/name").permitAll()
+                .antMatchers("/api/wechat/**").permitAll()
                 .anyRequest().authenticated()
 //                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
 //                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {

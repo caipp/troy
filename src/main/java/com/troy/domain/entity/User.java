@@ -27,6 +27,16 @@ public class User extends BaseEntity implements UserDetails {
 
     private Date lastPasswordReset;
 
+    private String wxOpenId;
+
+    private String nikename;
+
+    private String avatarUrl;
+
+    private String gender;
+
+    private String linglingId;
+
     @Transient
     private String newPassword;
 
@@ -34,13 +44,18 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> authorities = new HashSet<>();
 
     @JsonIgnore
-    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "users")
-    private Set<UserGroup> userGroup = new HashSet();
+    @ManyToMany(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "m_usergroup_user", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "usergroup_id")})
+    private Set<UserGroup> userGroups = new HashSet();
 
     @JsonIgnore
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "m_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user")
+    private Set<Card> cards = new HashSet<>();
 
     @Override
     public String getUsername() {
@@ -70,6 +85,46 @@ public class User extends BaseEntity implements UserDetails {
     @JsonProperty
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getWxOpenId() {
+        return wxOpenId;
+    }
+
+    public String getNikename() {
+        return nikename;
+    }
+
+    public void setNikename(String nikename) {
+        this.nikename = nikename;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setWxOpenId(String wxOpenId) {
+        this.wxOpenId = wxOpenId;
+    }
+
+    public String getLinglingId() {
+        return linglingId;
+    }
+
+    public void setLinglingId(String linglingId) {
+        this.linglingId = linglingId;
     }
 
     @Override
@@ -119,12 +174,12 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-    public Set<UserGroup> getUserGroup() {
-        return userGroup;
+    public Set<UserGroup> getUserGroups() {
+        return userGroups;
     }
 
-    public void setUserGroup(Set<UserGroup> userGroup) {
-        this.userGroup = userGroup;
+    public void setUserGroups(Set<UserGroup> userGroups) {
+        this.userGroups = userGroups;
     }
 
     public Set<Role> getRoles() {
@@ -133,5 +188,13 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
     }
 }

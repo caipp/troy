@@ -1,9 +1,12 @@
 package com.troy.domain.base;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +14,7 @@ import java.util.Date;
  * Created by 12546 on 2016/10/22.
  */
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -19,12 +23,16 @@ public abstract class BaseEntity implements Serializable {
     private Long id;
 
     @Column
+    @CreatedBy
     private String createBy;
     @Column
+    @CreatedDate
     private Date createAt;
     @Column
+    @LastModifiedBy
     private String updateBy;
     @Column
+    @LastModifiedDate
     private Date updateAt;
     @Column
     private Boolean enable = true;
