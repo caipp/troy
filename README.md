@@ -1,2 +1,2 @@
 # troy
-spring boot redis wechat door 
+used spring boot redis wechat   door control system  
